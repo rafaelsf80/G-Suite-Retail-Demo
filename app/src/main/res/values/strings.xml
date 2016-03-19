@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ScriptAndroid</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_itemdetails">itemdetails</string>
+
+    <string name="bt_preview">PREVIEW</string>
+    <string name="bt_sizeguide">"SIZE GUIDE "</string>
+
+    <string name="in_stock">" IN STOCK"</string>
+    <string name="size">SIZE</string>
+    <string name="size_details">Size: </string>
+    <string name="price">"PRICE: "</string>
+
+    <string name="brand">"Brand: "</string>
+    <string name="by_details">"By: "</string>
+    <string name="by">By</string>
+    <string name="_by_">" by "</string>
+    <string name="item_price">"Item Price: "</string>
+    <string name="restock">"Restock? "</string>
+
+    <string name="opening_size_guide">Opening Size Guide</string>
+
+
+
+
+</resources>
