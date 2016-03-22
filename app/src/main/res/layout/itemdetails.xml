@@ -15,7 +15,7 @@
         tools:context="com.google.retailAppWithConfig.itemdetails" >
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/tv_details_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -27,44 +27,44 @@
             android:id="@+id/mainimage"
             android:layout_width="500dp"
             android:layout_height="200dp"
-            android:layout_below="@id/title"
+            android:layout_below="@id/tv_details_title"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="4pt"
             android:layout_marginTop="3pt" />
 
         <Button
-            android:id="@+id/sizeGuide"
+            android:id="@+id/bt_details_pdf_guide"
             android:layout_width="40pt"
             android:layout_height="12pt"
             android:layout_below="@id/mainimage"
             android:layout_marginBottom="4pt"
             android:layout_marginLeft="4pt"
             android:background="#000000"
-            android:text="Size Guide"
+            android:text="@string/details_bt_pdfguide"
             android:textColor="#ffffff"
             android:textSize="7pt" />
 
         <Button
-            android:id="@+id/videoPreview"
+            android:id="@+id/bt_details_video_preview"
             android:layout_width="53pt"
             android:layout_height="12pt"
             android:layout_below="@id/mainimage"
             android:layout_marginBottom="4pt"
             android:layout_marginLeft="4pt"
-            android:layout_toRightOf="@id/sizeGuide"
+            android:layout_toRightOf="@id/bt_details_pdf_guide"
             android:background="#000000"
-            android:text="Video Preview"
+            android:text="@string/details_bt_video_preview"
             android:textColor="#ffffff"
             android:textSize="7pt" />
 
         <Button
-            android:id="@+id/inventoryCount"
+            android:id="@+id/bt_details_instock"
             android:layout_width="wrap_content"
             android:layout_height="12pt"
             android:layout_below="@id/mainimage"
             android:layout_marginBottom="4pt"
             android:layout_marginLeft="4pt"
-            android:layout_toRightOf="@id/videoPreview"
+            android:layout_toRightOf="@id/bt_details_video_preview"
             android:background="#ffdf6c31"
             android:paddingLeft="2pt"
             android:paddingRight="2pt"
@@ -73,37 +73,37 @@
             android:textSize="7pt" />
 
         <TextView
-            android:id="@+id/brand"
+            android:id="@+id/tv_details_by"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/sizeGuide"
+            android:layout_below="@id/bt_details_pdf_guide"
             android:layout_marginTop="3pt"
             android:fontFamily="sans-serif-condensed"
             android:textSize="10pt" />
 
         <TextView
-            android:id="@+id/size"
+            android:id="@+id/tv_details_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/brand"
+            android:layout_below="@id/tv_details_by"
             android:layout_marginTop="3pt"
             android:fontFamily="sans-serif-condensed"
             android:textSize="10pt" />
 
         <TextView
-            android:id="@+id/itemPrice"
+            android:id="@+id/tv_details_item_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/size"
+            android:layout_below="@id/tv_details_size"
             android:layout_marginTop="3pt"
             android:fontFamily="sans-serif-condensed"
             android:textSize="10pt" />
 
         <TextView
-            android:id="@+id/stockForecast"
+            android:id="@+id/tv_details_instock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/itemPrice"
+            android:layout_below="@id/tv_details_item_price"
             android:layout_marginTop="3pt"
             android:fontFamily="sans-serif-condensed"
             android:paddingLeft="2pt"

@@ -62,7 +62,7 @@
     </TextView>
 
 
-    <Button android:id="@+id/bt_video_preview"
+    <Button android:id="@+id/bt_card_details"
         android:layout_toRightOf="@id/im_thumbnail"
         android:layout_below="@id/tv_description"
         android:layout_width="40pt"
@@ -70,20 +70,20 @@
         android:background="#000000"
         android:textColor="#ffffff"
         android:textSize="7pt"
-        android:text="Preview"
+        android:text="@string/card_bt_details"
         android:layout_marginLeft="4pt"
         android:layout_marginBottom="4pt"
         />
 
-    <Button android:id="@+id/bt_size_guide"
-        android:layout_toRightOf="@id/bt_video_preview"
+    <Button android:id="@+id/bt_card_demand"
+        android:layout_toRightOf="@id/bt_card_details"
         android:layout_below="@id/tv_description"
         android:layout_width="45pt"
         android:layout_height="12pt"
         android:background="#000000"
         android:textColor="#ffffff"
         android:textSize="7pt"
-        android:text="Size Guide"
+        android:text="@string/card_bt_demand"
         android:layout_marginLeft="4pt"
         android:layout_marginBottom="4pt"
         />
@@ -95,7 +95,7 @@
         android:background="#ffdf6c31"
         android:textColor="#ff000000"
         android:textSize="7pt"
-        android:text="Stock"
+        android:text="@string/card_in_stock_label"
         android:padding="3pt"
         android:layout_marginLeft="4pt"
         android:layout_marginBottom="4pt"
@@ -109,7 +109,7 @@
         android:background="#ffdf6c31"
         android:textColor="#ff000000"
         android:textSize="7pt"
-        android:text="Size"
+        android:text="@string/card_bt_size_label"
         android:padding="3pt"
         android:layout_marginLeft="12pt"
         android:layout_marginBottom="4pt"
@@ -123,12 +123,11 @@
         android:background="#ffdf6c31"
         android:textColor="#ff000000"
         android:textSize="7pt"
-        android:text="Price"
+        android:text="@string/card_price_label"
         android:padding="3pt"
         android:layout_marginLeft="12pt"
         android:layout_marginBottom="4pt"
         />
-
 
 </RelativeLayout>
 </android.support.v7.widget.CardView>

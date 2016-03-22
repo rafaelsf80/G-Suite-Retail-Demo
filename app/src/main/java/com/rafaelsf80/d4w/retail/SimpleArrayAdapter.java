@@ -5,7 +5,6 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,57 +19,38 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
 import java.util.ArrayList;
 
-
-// ArrayAdapter is a special kind of ListAdapter which supplies data to ListView
 public class SimpleArrayAdapter extends RecyclerView.Adapter<SimpleArrayAdapter.ViewHolder> {
 	
 	private final String TAG = getClass().getSimpleName();
-    public static Context context;
+    public Context context;
     public Activity activity;
     private ArrayList<Item> values;
-    private Config currentConfig = null;
+    private String mColor;
    
-    public SimpleArrayAdapter(Context context, Activity activity, ArrayList<Item> values, Config object) {
+    public SimpleArrayAdapter(Context context, Activity activity, ArrayList<Item> values, String color) {
     	//super(context, R.layout.rowlayout, values);
         this.context = context;
         this.values = values;
         this.activity = activity;
-
-        currentConfig = object;      
+        this.mColor = color;
     }
-
-	public Config getCurrentConfig() {
-		
-		return currentConfig;
-	}
-
-
-	public void setCurrentConfig(Config currentConfig) {
-		this.currentConfig = currentConfig;
-	}
-
-	public ArrayList<Item> getValues() {
-		return values;
-	}
-
-	
-	public void setValues(ArrayList<Item> values) {
-		this.values = values;
-	}
 
 	@Override
 	public int getItemCount() {
-		// TODO Auto-generated method stub
 		return values.size();
 	}
 
 	@Override
 	public void onBindViewHolder(ViewHolder rowView, int position) {
-		// get the item which has been pressed and store current item data into variables
-        Item i = values.get(position);
 
+        // get the item which has been pressed and store current item data into variables
+        Item i = values.get(position);
         final String itemName = i.itemName;
         final String brand = i.brand;
         final String size = i.size;
@@ -81,67 +61,110 @@ public class SimpleArrayAdapter extends RecyclerView.Adapter<SimpleArrayAdapter.
         final String inventoryCount = i.inventoryCount;
         final String stockForecast = i.stockForecast;
 
-
         if (stockForecast == "true") {
-        	rowView.cardView.setBackgroundColor(Color.parseColor("#f9320e"));
+        	rowView.cardView.setBackgroundColor(Color.parseColor(mColor));
+        } else {
+            rowView.cardView.setBackgroundColor(context.getResources().getColor(R.color.card_nostock));
         }
+
 
         // set list menu content to variables
         rowView.tvTitle.setText(itemName);
-        rowView.tvDescription.setText(context.getResources().getString(R.string.brand) + brand);
-        rowView.btInventory.setText(inventoryCount + context.getResources().getString(R.string.in_stock));
-        rowView.btSize.setText(context.getResources().getString(R.string.bt_sizeguide) + size);
-        rowView.btPrice.setText(context.getResources().getString(R.string.price) + itemPrice);
+        rowView.tvDescription.setText(context.getResources().getString(R.string.card_brand) + brand);
+        rowView.btInventory.setText(inventoryCount + context.getResources().getString(R.string.card_in_stock_label));
+        rowView.btSize.setText(context.getResources().getString(R.string.card_bt_size_label) + size);
+        rowView.btPrice.setText(context.getResources().getString(R.string.card_price_label) + itemPrice);
 
         // download thumbnail
         Picasso.with(context)
-        .load(thumbnailURL)
-        .into(rowView.imThumbnail);
+            .load(thumbnailURL)
+            .into(rowView.imThumbnail);
         
-        // listener to detect whether the watch video item has been pressed
-        rowView.btVideoPreview.setOnClickListener(new OnClickListener() {
+        // clicking the Details button will open a Details page
+        rowView.btDetails.setOnClickListener(new OnClickListener() {
 
         	@Override
         	public void onClick(View v) {
 
-        		Log.d(TAG, "onClick btVideoPreview");
-        		Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(videoPreview));
-        		context.startActivity(intent);
+        		Log.d(TAG, "onClick btDetails");
+                Intent intent = new Intent(v.getContext(), ItemDetails.class);
 
-        		// create new toast to update the user what video is about to be played
-        		Toast.makeText(context, "Playing " + itemName + " Preview" ,
-        				Toast.LENGTH_LONG).show();
+                // when a list item has been pressed move to the item details screen,  passing the following data
+                intent.putExtra("itemName", itemName);
+                intent.putExtra("mainImage", thumbnailURL);
+                intent.putExtra("brand", brand);
+                intent.putExtra("size", size);
+                intent.putExtra("sizeGuide", sizeGuide);
+                intent.putExtra("videoPreview", videoPreview);
+                intent.putExtra("itemPrice", itemPrice);
+                intent.putExtra("inventoryCount", inventoryCount);
+                intent.putExtra("stockForecast", stockForecast);
 
+                // move to the details screen
+                context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle());
         	}
         });
 
-        // listener to detect whether the watch video item has been pressed
-        rowView.btSizeGuide.setOnClickListener(new OnClickListener() {
+        // clicking the demand button will automatically prefill a form and submit a response
+        rowView.btDemand.setOnClickListener(new OnClickListener() {
 
         	@Override
         	public void onClick(View v) {
-        		Log.d(TAG, "onClick btSizeGuide");
-        		String googleDocsUrl = "http://docs.google.com/viewer?url=";
-        		Intent intent = new Intent(Intent.ACTION_VIEW);
 
-        		intent.setDataAndType(Uri.parse(googleDocsUrl + sizeGuide), "text/html");
-        		context.startActivity(intent);
+                Log.d(TAG, "onClick btDemand");
+                Intent intent = new Intent(v.getContext(), ItemDetails.class);
 
-        		// create new toast to update the user what video is about to be played
-        		Toast.makeText(context, "Opening Size Guide",
+                // when a list item has been pressed move to the item details screen,  passing the following data
+                intent.putExtra("itemName", itemName);
+                intent.putExtra("mainImage", thumbnailURL);
+                intent.putExtra("brand", brand);
+                intent.putExtra("size", size);
+                intent.putExtra("sizeGuide", sizeGuide);
+                intent.putExtra("videoPreview", videoPreview);
+                intent.putExtra("itemPrice", itemPrice);
+                intent.putExtra("inventoryCount", inventoryCount);
+                intent.putExtra("stockForecast", stockForecast);
+
+                // How to Pre-populate form and automatically submit answers:
+                // Steps:
+                // 1) Settings->Get pre-filled link and submit one answer to obtain the pre-filled URL
+                // 2) Replace viewform? with formResponse?ifq&
+                // 3) Add &submit=Submit at the end
+                // https://docs.google.com/forms/d/17LzKVxCQ68EWiVVkhZ8_Sotn4cI46rk9TZvGG9FwkyY/viewform?entry.744206449=item_2&entry.1979146659=size_2&entry.875592217=brand_2
+
+                // Thread to avoid NetworkOnMainThread exception
+                new Thread(new Runnable(){
+                    public void run()
+                    {
+                        HttpClient hc = new DefaultHttpClient();
+                        // remove spaces for URL
+                        String regexItemName = itemName.replaceAll("\\s+","");
+                        String regexSize = size.replaceAll("\\s+","");
+                        String regexBrand = brand.replaceAll("\\s+","");
+
+                        String FormUrl = "https://docs.google.com/forms/d/17LzKVxCQ68EWiVVkhZ8_Sotn4cI46rk9TZvGG9FwkyY/formResponse?ifq&entry.744206449=" + regexItemName + "&entry.1979146659=" + regexSize + "&entry.875592217=" + regexBrand + "&submit=Submit";
+                        try {
+                            HttpGet get = new HttpGet(FormUrl);
+                            hc.execute(get);
+                        }
+                        catch (Exception e) {
+                            Log.e(TAG, "Error sending Demand Info through Form", e);
+                        }
+                    }
+                }).start();
+
+                // create new toast to confirm user about demand generation
+        		Toast.makeText(context, context.getResources().getString(R.string.demand_generation) + itemName,
         				Toast.LENGTH_LONG).show();
-
         	}
         });        
 
-        // listener to detect whether a list item has been pressed
+        // listener to detect whether a card has been pressed
         rowView.tvTitle.setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 	
 				Log.d(TAG, "onClick tvTitle");
-		
         		Intent intent = new Intent(v.getContext(), ItemDetails.class);
 
         		// when a list item has been pressed move to the item details screen,  passing the following data				
@@ -154,8 +177,8 @@ public class SimpleArrayAdapter extends RecyclerView.Adapter<SimpleArrayAdapter.
         		intent.putExtra("itemPrice", itemPrice);
         		intent.putExtra("inventoryCount", inventoryCount);
         		intent.putExtra("stockForecast", stockForecast);
-        		// move to the item details screen	
-        	
+
+				// move to the details screen
         		context.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(activity).toBundle());
         	}
         });	     
@@ -184,13 +207,13 @@ public class SimpleArrayAdapter extends RecyclerView.Adapter<SimpleArrayAdapter.
 		public CardView cardView;
 		public TextView tvTitle;
 		public TextView tvDescription;
-		public Button btInventory;
-		public Button btSize;
-		public Button btPrice;
-		public Button btVideoPreview;;
-		public Button btSizeGuide;
-		public ImageView imThumbnail;
-			
+        public ImageView imThumbnail;
+		public Button btDetails;
+		public Button btDemand;
+        public Button btInventory;
+        public Button btSize;
+        public Button btPrice;
+
 		public ViewHolder(View rowView) {
 			super(rowView);
 		
@@ -198,13 +221,13 @@ public class SimpleArrayAdapter extends RecyclerView.Adapter<SimpleArrayAdapter.
 			cardView = (CardView) rowView.findViewById(R.id.my_card_view);
 	        tvTitle = (TextView) rowView.findViewById(R.id.tv_title);
 	        tvDescription = (TextView) rowView.findViewById(R.id.tv_description);
-	        btVideoPreview = (Button) rowView.findViewById(R.id.bt_video_preview);
-	        btSizeGuide = (Button) rowView.findViewById(R.id.bt_size_guide);
+            imThumbnail = (ImageView) rowView.findViewById(R.id.im_thumbnail);
+
+	        btDetails = (Button) rowView.findViewById(R.id.bt_card_details);
+	        btDemand = (Button) rowView.findViewById(R.id.bt_card_demand);
 	        btInventory = (Button) rowView.findViewById(R.id.bt_inventory);
 	        btSize = (Button) rowView.findViewById(R.id.bt_size);
 	        btPrice = (Button) rowView.findViewById(R.id.bt_price);
-	        imThumbnail = (ImageView) rowView.findViewById(R.id.im_thumbnail);		
-        
 		}
 	}
 }

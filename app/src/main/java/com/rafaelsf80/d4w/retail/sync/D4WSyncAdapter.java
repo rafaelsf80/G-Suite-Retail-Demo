@@ -47,83 +47,62 @@ public class D4WSyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
 
         Log.d(TAG, "Starting sync");
-
-        // These two need to be declared outside the try/catch
-        // so that they can be closed in the finally block.
-
-
         String result="";
+        Main.items.clear();
+        try {
+            HttpClient hc = new DefaultHttpClient();
+            HttpGet get = new HttpGet(Main.ConfigUrl);
+            HttpResponse rp = hc.execute(get);
 
+            // grab JSON from the URL above and store it in the items class
+            Log.d(TAG, "Status Code " + Integer.toString(rp.getStatusLine().getStatusCode()));
+            if(rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
+            {
+                result = EntityUtils.toString(rp.getEntity());
+                JSONArray objects = new JSONArray(result);
 
-
-
-            try {
-                HttpClient hc = new DefaultHttpClient();
-                // The script must be on gmail.com account to access anonimously
-                String 	URL = "https://script.google.com/macros/s/AKfycbyA-FsVadOuM1yxubTnqUOvnXoMUgU6kjY7Uw6C6-LcBuAZWIsX/exec";
-                // Japanese spreadsheet
-                // String 	URL = "https://script.google.com/macros/s/AKfycby4lAzg-j-FQJ5VBbXuoufW_ZuPF61OvcllRN1cmQkseXTkWWyC/exec";
-
-                HttpGet get = new HttpGet(URL);
-                HttpResponse rp = hc.execute(get);
-
-                // grab JSON from the URL above and store it in the items class
-                Log.d(TAG, "Status Code " + Integer.toString(rp.getStatusLine().getStatusCode()));
-                if(rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
-                {
-                    result = EntityUtils.toString(rp.getEntity());
-                    JSONArray objects = new JSONArray(result);
-
-                    for (int i = 0; i < objects.length(); i++) {
-                        JSONObject session = objects.getJSONObject(i);
-                        Main.config.logo = session.getString("logolink");
-                        Main.config.appName = session.getString("appname");
-                        Main.config.subTitle = session.getString("subtitle");
-                        Main.config.colorScheme = session.getString("colourscheme");
-                        Log.d(TAG, Main.config.toString());
-                    }
+                for (int i = 0; i < objects.length(); i++) {
+                    JSONObject session = objects.getJSONObject(i);
+                    Main.config.logo = session.getString("logolink");
+                    Main.config.appName = session.getString("appname");
+                    Main.config.subTitle = session.getString("subtitle");
+                    Main.config.colorScheme = session.getString("colourscheme");
+                    Log.d(TAG, Main.config.toString());
                 }
-
-                URL = "https://script.google.com/macros/s/AKfycbxFAo0wxZ7fcJEyDE0QdfGmBhFiJiA3a8YMpv9KjRGeYZdK2iU/exec";
-                // Japanese spreadsheet
-                //String 	URL = "https://script.google.com/macros/s/AKfycbzB40wY1F1wkn-GgJNi5qju4-enksApCbvuJN2Ty0X2IVOM9ko/exec";
-
-                get = new HttpGet(URL);
-                rp = hc.execute(get);
-
-                // grab JSON from the URL above and store it in the items class
-                Log.d(TAG, "Status Code " + Integer.toString(rp.getStatusLine().getStatusCode()));
-                if(rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
-                {
-                    result = EntityUtils.toString(rp.getEntity());
-                    JSONArray objects = new JSONArray(result);
-
-                    for (int i = 0; i < objects.length(); i++) {
-                        JSONObject session = objects.getJSONObject(i);
-                        Item item = new Item();
-                        item.itemName = session.getString("itemname");
-                        item.brand = session.getString("brand");
-                        item.size = session.getString("size");
-                        item.imageURL = session.getString("imagelink");
-                        item.sizeGuideURL = session.getString("sizeguide");
-                        item.videoPreviewURL = session.getString("videopreview");
-                        item.itemPrice = session.getString("price");
-                        item.inventoryCount = session.getString("inventorycount");
-                        item.stockForecast = session.getString("forecast");
-
-                        Main.items.add(item);
-                        Log.d(TAG, item.toString());
-                    }
-                }
-            } catch (Exception e) {
-                Log.e(TAG, "Error loading Config", e);
-                Log.e(TAG, result);
             }
 
+            get = new HttpGet(Main.DataUrl);
+            rp = hc.execute(get);
+            // grab JSON from the URL above and store it in the items class
+            Log.d(TAG, "Status Code " + Integer.toString(rp.getStatusLine().getStatusCode()));
+            if(rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
+            {
+                result = EntityUtils.toString(rp.getEntity());
+                JSONArray objects = new JSONArray(result);
+
+                for (int i = 0; i < objects.length(); i++) {
+                    JSONObject session = objects.getJSONObject(i);
+                    Item item = new Item();
+                    item.itemName = session.getString("itemname");
+                    item.brand = session.getString("brand");
+                    item.size = session.getString("size");
+                    item.imageURL = session.getString("imagelink");
+                    item.sizeGuideURL = session.getString("sizeguide");
+                    item.videoPreviewURL = session.getString("videopreview");
+                    item.itemPrice = session.getString("price");
+                    item.inventoryCount = session.getString("inventorycount");
+                    item.stockForecast = session.getString("forecast");
+
+                    Main.items.add(item);
+                    Log.d(TAG, item.toString());
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error loading Config or Data", e);
+            Log.e(TAG, result);
+        }
+
         getContext().getContentResolver().notifyChange(Uri.parse("content://rafa"), null, false);
-
-        Log.d(TAG, "Bye");
-
         return;
     }
 

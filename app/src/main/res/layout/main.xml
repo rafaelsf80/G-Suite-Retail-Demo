@@ -10,17 +10,17 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
 
-    <ImageButton
-        android:id="@+id/fab_1"
-        android:layout_width="@dimen/fab_size"
-        android:layout_height="@dimen/fab_size"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/ripple"
-        android:elevation="10dp"
-        android:src="@drawable/reply"
-        android:stateListAnimator="@anim/button_elevation" />
+    <!--<ImageButton-->
+        <!--android:id="@+id/fab_1"-->
+        <!--android:layout_width="@dimen/fab_size"-->
+        <!--android:layout_height="@dimen/fab_size"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginBottom="16dp"-->
+        <!--android:layout_marginRight="16dp"-->
+        <!--android:background="@drawable/ripple"-->
+        <!--android:elevation="10dp"-->
+        <!--android:src="@drawable/reply"-->
+        <!--android:stateListAnimator="@anim/button_elevation" />-->
 
 </RelativeLayout>

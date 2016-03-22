@@ -3,11 +3,11 @@ package com.rafaelsf80.d4w.retail;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.transition.Slide;
 import android.transition.Transition;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,6 +29,7 @@ public class ItemDetails extends Activity {
 
 		//enable window content transition
 		getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+
 		//set the transition
 		Transition ts = new Slide();  
 		ts.setDuration(500);
@@ -38,14 +39,14 @@ public class ItemDetails extends Activity {
 		setContentView(R.layout.itemdetails);
 
 		// create variables to store the item details UI elements
-		TextView itemDetailsTitle = (TextView) findViewById(R.id.title);
-		TextView brandTextView = (TextView) findViewById(R.id.brand);
-		TextView sizeView = (TextView) findViewById(R.id.size);
-		Button sizeGuideView = (Button) findViewById(R.id.sizeGuide);
-		Button videoPreviewView = (Button) findViewById(R.id.videoPreview);
-		Button inventoryCountView = (Button) findViewById(R.id.inventoryCount);
-		TextView itemPriceView = (TextView) findViewById(R.id.itemPrice);
-		TextView stockForecastView = (TextView) findViewById(R.id.stockForecast);
+		TextView tvBrandView = (TextView) findViewById(R.id.tv_details_title);
+		Button btPdfGuideView = (Button) findViewById(R.id.bt_details_pdf_guide);
+		Button btVideoPreviewView = (Button) findViewById(R.id.bt_details_video_preview);
+		Button btStockView = (Button) findViewById(R.id.bt_details_instock);
+		TextView tvDetailsBy = (TextView) findViewById(R.id.tv_details_by);
+		TextView tvSizeView = (TextView) findViewById(R.id.tv_details_size);
+		TextView tvPriceView = (TextView) findViewById(R.id.tv_details_item_price);
+		TextView tvStockView = (TextView) findViewById(R.id.tv_details_instock);
 
 		// gather data which was passed from the selected list item
 		Intent fromListItem = getIntent();
@@ -60,59 +61,58 @@ public class ItemDetails extends Activity {
 		final String inventoryCount = fromListItem.getStringExtra("inventoryCount");
 		String stockForecast = fromListItem.getStringExtra("stockForecast");
 
-		// set UI information to the data whic	h has been parsed through
+		// set UI information to the data which has been parsed through
+		setTitle(itemName + getResources().getString(R.string.details_title_by_) + brand);
 
-		setTitle(itemName + getResources().getString(R.string._by_) + brand);
-		itemDetailsTitle.setText(itemName);
-		brandTextView.setText( getResources().getString(R.string.by_details) + brand);
-		sizeView.setText(getResources().getString(R.string.size_details) + size);
-		inventoryCountView.setText(inventoryCount + getResources().getString(R.string.in_stock));
-		itemPriceView.setText(getResources().getString(R.string.item_price) + itemPrice);
+		tvBrandView.setText(itemName);
+		btStockView.setText(inventoryCount + getResources().getString(R.string.details_in_stock_label));
+		tvDetailsBy.setText( getResources().getString(R.string.details_by) + brand);
+		tvSizeView.setText(getResources().getString(R.string.details_size) + size);
+		tvPriceView.setText(getResources().getString(R.string.details_item_price) + itemPrice);
+		tvStockView.setText(getResources().getString(R.string.details_restock) + stockForecast);
 
 
 		if (stockForecast.equals("true")) {
-			stockForecastView.setBackgroundColor(Color.RED);
+			tvStockView.setBackgroundColor(getResources().getColor(R.color.card_stock_alarm));
 		} else {
-			stockForecastView.setBackgroundColor(Color.GREEN);
+			tvStockView.setBackgroundColor(getResources().getColor(R.color.card_nostock));
 		}
-
-		stockForecastView.setText(getResources().getString(R.string.restock) + stockForecast);
-
 
 		// download thumbnail
 		ImageView iconView = (ImageView) findViewById(R.id.mainimage);
 		Picasso.with(this)
-		.load(mainImage)
-		.into(iconView	);
+			.load(mainImage)
+			.into(iconView);
 
 
-		videoPreviewView.setOnClickListener(new View.OnClickListener() {
+		btVideoPreviewView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Log.d(TAG, "onClick btVideoPreview");
 				Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(videoPreview));
 				startActivity(intent);
 
 				// create new toast to update the user what video is about to be played
-				Toast.makeText(getApplicationContext(), "Playing " + itemName + " Preview",
+				Toast.makeText(getApplicationContext(), getResources().getString(R.string.playing_video) + itemName,
 						Toast.LENGTH_LONG).show();
 			}
 
 		});
 
 
-		sizeGuideView.setOnClickListener(new View.OnClickListener() {
+		btPdfGuideView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Log.d(TAG, "onClick btPdfGuide");
 				String googleDocsUrl = "http://docs.google.com/viewer?url=";
 
 				Intent intent = new Intent(Intent.ACTION_VIEW);
 				intent.setDataAndType(Uri.parse(googleDocsUrl + sizeGuide), "text/html");
 				startActivity(intent);
 
-				// create new toast to update the user what video is about to be played
-				Toast.makeText(getApplicationContext(), getResources().getString(R.string.opening_size_guide),
+				// create new toast to update the user that pdf is about to be opened
+				Toast.makeText(getApplicationContext(), getResources().getString(R.string.opening_pdf_guide),
 						Toast.LENGTH_LONG).show();
-
 			}
 
 		});

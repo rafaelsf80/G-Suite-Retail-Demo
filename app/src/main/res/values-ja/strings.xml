@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ScriptAndroid</string>
+    <string name="app_name">D4WRetail</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_itemdetails">itemdetails</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="sync_account_type">NoSyncAccount</string>
+    <string name="content_authority">com.rafaelsf80.d4w.retail.StubProvider</string>
+    <string name="title_activity_details">Item details</string>
 
+    <string name="card_brand">"Brand: "</string>
+    <string name="card_bt_details">DETAILS</string>
+    <string name="card_bt_demand">DEMAND</string>
+    <string name="card_in_stock_label">" IN STOCK"</string>
+    <string name="card_bt_size_label">"SIZE: "</string>
+    <string name="card_price_label">"PRICE: "</string>
 
+    <string name="demand_generation">"Demand generation for item: "</string>
+    <string name="opening_pdf_guide">Opening PDF guide</string>
+    <string name="playing_video">"Playing video of "</string>
 
+    <string name="details_title_by_">" by "</string>
+    <string name="details_bt_pdfguide">Guide</string>
+    <string name="details_bt_video_preview">Video Preview</string>
+    <string name="details_in_stock_label">" IN STOCK"</string>
+    <string name="details_by">"By: "</string>
+    <string name="details_size">"Size: "</string>
+    <string name="details_item_price">"Item Price: "</string>
+    <string name="details_restock">"Restock? "</string>
 </resources>

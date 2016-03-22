@@ -1,10 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ScriptAndroid</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_itemdetails">itemdetails</string>
+    <string name="app_name">D4WRetail</string>
+    <string name="action_settings">Configuración</string>
+    <string name="action_refresh">Recargar</string>
+    <string name="sync_account_type">NoSyncAccount</string>
+    <string name="content_authority">com.rafaelsf80.d4w.retail.StubProvider</string>
+    <string name="title_activity_details">Detalles</string>
 
+    <string name="card_brand">"Marca: "</string>
+    <string name="card_bt_details">DETALLES</string>
+    <string name="card_bt_demand">DEMANDA</string>
+    <string name="card_in_stock_label">" EN STOCK"</string>
+    <string name="card_bt_size_label">"TALLA: "</string>
+    <string name="card_price_label">"PRECIO: "</string>
 
+    <string name="demand_generation">"Envío demanda para: "</string>
+    <string name="opening_pdf_guide">Abriendo guía</string>
+    <string name="playing_video">"Video de "</string>
 
+    <string name="details_title_by_">" por "</string>
+    <string name="details_bt_pdfguide">Guía PDF</string>
+    <string name="details_bt_video_preview">Ver video</string>
+    <string name="details_in_stock_label">" EN STOCK"</string>
+    <string name="details_by">"Marca: "</string>
+    <string name="details_size">"Talla: "</string>
+    <string name="details_item_price">"Precio unitario: "</string>
+    <string name="details_restock">"Restock? "</string>
 </resources>
+

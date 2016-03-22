@@ -6,8 +6,8 @@ package com.rafaelsf80.d4w.retail;
  */
 
 public class Config {
-    String logo;
-    String appName;
-    String subTitle;
-    String colorScheme;
+    public String logo;
+    public String appName;
+    public String subTitle;
+    public String colorScheme;
 }
