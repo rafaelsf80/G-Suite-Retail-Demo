@@ -16,8 +16,10 @@ The spreadsheet contains up to three Apps Script projects, one for the predictio
 
 2) Open the spreadsheet backend to see the data.
 
-3) If you wat to customize content, you need to create a copy a copy of the spreadsheet, access the two scripts and finally change the two URLs accordingly in the code
-(D4WSyncAdapter.java). Click Refresh on the apk to see the changes
+3) If you want to customize content, you need to create a copy a copy of the spreadsheet, publish the two scripts and finally change the two URLs accordingly in the code
+(D4WSyncAdapter.java)
+
+4) Click Refresh on the apk to see the changes
 
 ## Backend
 
@@ -35,12 +37,13 @@ The following libraries must be included for proper compilation and execution:
 
 ## Android release
 
-A binary apk can be downloaded from [here](https://drive.google.com/file/d/0B6IAELMrLfE5TDRhLUJUT05mUnc/view?usp=sharing).
-This apk uses Material Design concepts (also transitions) compiled with SDK target 21 (5.0) and tested on Nexus 5 with lollipop.
-IDE used is Android Studio
+This apk uses Material Design concepts (also transitions) compiled with SDK target 21 (5.0) and tested on 
+Nexus 5 and Nexus 6 with lollipop IDE used is Android Studio
 
 
 ## Screenshots
 
-Main activity:
-![image alt text](screenshots/main.png)
+Main activity, details and view to send email:
+<img src="https://raw.githubusercontent.com/rafaelsf80/d4wRetail/master/screenshots/main.png" alt="alt text" width="100" height="200">
+<img src="https://raw.githubusercontent.com/rafaelsf80/d4wRetail/master/screenshots/details.png" alt="alt text" width="100" height="200">
+<img src="https://raw.githubusercontent.com/rafaelsf80/d4wRetail/master/screenshots/survey.png" alt="alt text" width="100" height="200">

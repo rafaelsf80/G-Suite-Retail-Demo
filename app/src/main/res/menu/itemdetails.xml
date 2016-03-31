@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.google.retailAppWithConfig.itemdetails" >
     <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+        android:title="@string/action_feedback"
         android:orderInCategory="100"
         android:showAsAction="never" />
 </menu>

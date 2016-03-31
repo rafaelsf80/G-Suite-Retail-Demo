@@ -2,11 +2,16 @@
 <resources>
 
     <string name="app_name">D4WRetail</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_feedback">Send Feedback</string>
     <string name="action_refresh">Refresh</string>
     <string name="sync_account_type">NoSyncAccount</string>
     <string name="content_authority">com.rafaelsf80.d4w.retail.StubProvider</string>
     <string name="title_activity_details">Item details</string>
+
+    <string name="email_feedback_subject">Please, provide feedback</string>
+    <string name="email_feedback_text"><![CDATA[<p>Dear customer:<p>Please, complete <b>this form:</b>]]></string>
+    <string name="email_feedback_action">Sending email to the customer...</string>
+    <string name="email_feedback_error">There are no email clients installed.</string>
 
     <string name="card_brand">"Brand: "</string>
     <string name="card_bt_details">DETAILS</string>

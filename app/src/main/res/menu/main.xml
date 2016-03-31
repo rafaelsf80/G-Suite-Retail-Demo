@@ -4,9 +4,9 @@
     tools:context="com.rafaelsf80.scriptandroid.Main" >
 
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_feedback"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_feedback"
         />
 
     <item android:id="@+id/options_refresh_data"

@@ -2,7 +2,10 @@ package com.rafaelsf80.d4w.retail;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.ContentObserver;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -14,12 +17,15 @@ import android.os.Looper;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.transition.Explode;
 import android.transition.Transition;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -47,7 +53,6 @@ public class Main extends Activity {
     //String 	URL = "https://script.google.com/macros/s/AKfycbzB40wY1F1wkn-GgJNi5qju4-enksApCbvuJN2Ty0X2IVOM9ko/exec";
     // URL of form: refer to SimpleArrayAdapter.java to modify accordingly
     // https://docs.google.com/forms/d/17LzKVxCQ68EWiVVkhZ8_Sotn4cI46rk9TZvGG9FwkyY/viewform?entry.744206449=item_2&entry.1979146659=size_2&entry.875592217=brand_2
-
 
     // The authority for the sync adapter's content provider
     public static final String AUTHORITY = "com.rafaelsf80.d4w.retail.sync.D4WSyncAdapter";
@@ -161,7 +166,22 @@ public class Main extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_feedback) {
+
+            final EditText etCustomerEmail = new EditText(this);
+            new AlertDialog.Builder(this).setTitle("Feedback Email")
+                    .setMessage("Introduce customer email:")
+                    .setView(etCustomerEmail)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            sendEmail( etCustomerEmail.getText().toString() );
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                        }
+                    })
+                    .show();
             return true;
         }
         if (id == R.id.options_refresh_data) {
@@ -175,6 +195,20 @@ public class Main extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void sendEmail(String emailAddress) {
+
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("text/html");
+        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{emailAddress});
+        i.putExtra(Intent.EXTRA_SUBJECT, getResources().getString(R.string.email_feedback_subject));
+        i.putExtra(Intent.EXTRA_TEXT   , Html.fromHtml(getResources().getString(R.string.email_feedback_text)));
+        try {
+            startActivity(Intent.createChooser(i, getResources().getString(R.string.email_feedback_action)));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(Main.this,  getResources().getString(R.string.email_feedback_error), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
