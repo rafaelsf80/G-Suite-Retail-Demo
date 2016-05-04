@@ -17,11 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
-
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.util.ArrayList;
 
@@ -59,6 +61,7 @@ public class SimpleArrayAdapter extends RecyclerView.Adapter<SimpleArrayAdapter.
         final String videoPreview = i.videoPreviewURL;
         final String itemPrice = i.itemPrice;
         final String inventoryCount = i.inventoryCount;
+        final String itemLocation = i.itemLocation;
         final String stockForecast = i.stockForecast;
 
         if (stockForecast == "true") {
@@ -98,6 +101,7 @@ public class SimpleArrayAdapter extends RecyclerView.Adapter<SimpleArrayAdapter.
                 intent.putExtra("videoPreview", videoPreview);
                 intent.putExtra("itemPrice", itemPrice);
                 intent.putExtra("inventoryCount", inventoryCount);
+                intent.putExtra("itemLocation", itemLocation);
                 intent.putExtra("stockForecast", stockForecast);
 
                 // move to the details screen
@@ -132,30 +136,34 @@ public class SimpleArrayAdapter extends RecyclerView.Adapter<SimpleArrayAdapter.
                 // 3) Add &submit=Submit at the end
                 // https://docs.google.com/forms/d/17LzKVxCQ68EWiVVkhZ8_Sotn4cI46rk9TZvGG9FwkyY/viewform?entry.744206449=item_2&entry.1979146659=size_2&entry.875592217=brand_2
 
-                // Thread to avoid NetworkOnMainThread exception
-                new Thread(new Runnable(){
-                    public void run()
-                    {
-                        HttpClient hc = new DefaultHttpClient();
-                        // remove spaces for URL
-                        String regexItemName = itemName.replaceAll("\\s+","");
-                        String regexSize = size.replaceAll("\\s+","");
-                        String regexBrand = brand.replaceAll("\\s+","");
+                RequestQueue mQueue = Volley.newRequestQueue(context);
 
-                        String FormUrl = "https://docs.google.com/forms/d/17LzKVxCQ68EWiVVkhZ8_Sotn4cI46rk9TZvGG9FwkyY/formResponse?ifq&entry.744206449=" + regexItemName + "&entry.1979146659=" + regexSize + "&entry.875592217=" + regexBrand + "&submit=Submit";
-                        try {
-                            HttpGet get = new HttpGet(FormUrl);
-                            hc.execute(get);
-                        }
-                        catch (Exception e) {
-                            Log.e(TAG, "Error sending Demand Info through Form", e);
-                        }
+                // remove spaces for URL
+                String regexItemName = itemName.replaceAll("\\s+","");
+                String regexSize = size.replaceAll("\\s+","");
+                String regexBrand = brand.replaceAll("\\s+","");
+
+                String FormUrl = "https://docs.google.com/forms/d/17LzKVxCQ68EWiVVkhZ8_Sotn4cI46rk9TZvGG9FwkyY/formResponse?ifq&entry.744206449=" + regexItemName + "&entry.1979146659=" + regexSize + "&entry.875592217=" + regexBrand + "&submit=Submit";
+
+                StringRequest mRequest = new StringRequest(Request.Method.GET, FormUrl, new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String s) {
+                        ///handle response from service
+                        Log.d(TAG, "Form Response: " + s);
+                        // create new toast to confirm user about demand generation
+                        Toast.makeText(context, context.getResources().getString(R.string.demand_generation) + itemName,
+                                Toast.LENGTH_LONG).show();
+
                     }
-                }).start();
+                }, new Response.ErrorListener() {
 
-                // create new toast to confirm user about demand generation
-        		Toast.makeText(context, context.getResources().getString(R.string.demand_generation) + itemName,
-        				Toast.LENGTH_LONG).show();
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        Log.d(TAG, "Error sending Demand Info through Form: " + volleyError.toString());
+                    }
+                });
+
+                mQueue.add(mRequest);
         	}
         });        
 

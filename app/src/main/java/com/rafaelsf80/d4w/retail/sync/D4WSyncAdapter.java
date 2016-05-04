@@ -11,16 +11,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.rafaelsf80.d4w.retail.Item;
 import com.rafaelsf80.d4w.retail.Main;
 import com.rafaelsf80.d4w.retail.R;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -36,12 +36,9 @@ public class D4WSyncAdapter extends AbstractThreadedSyncAdapter {
 
     private final String TAG = getClass().getSimpleName();
 
-
     public D4WSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
     }
-
-
 
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
@@ -49,60 +46,83 @@ public class D4WSyncAdapter extends AbstractThreadedSyncAdapter {
         Log.d(TAG, "Starting sync");
         String result="";
         Main.items.clear();
-        try {
-            HttpClient hc = new DefaultHttpClient();
-            HttpGet get = new HttpGet(Main.ConfigUrl);
-            HttpResponse rp = hc.execute(get);
 
-            // grab JSON from the URL above and store it in the items class
-            Log.d(TAG, "Status Code " + Integer.toString(rp.getStatusLine().getStatusCode()));
-            if(rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
-            {
-                result = EntityUtils.toString(rp.getEntity());
-                JSONArray objects = new JSONArray(result);
+        RequestQueue mQueue = Volley.newRequestQueue(getContext());
 
-                for (int i = 0; i < objects.length(); i++) {
-                    JSONObject session = objects.getJSONObject(i);
-                    Main.config.logo = session.getString("logolink");
-                    Main.config.appName = session.getString("appname");
-                    Main.config.subTitle = session.getString("subtitle");
-                    Main.config.colorScheme = session.getString("colourscheme");
-                    Log.d(TAG, Main.config.toString());
+        // FIRST HTTP REQUEST: grab JSON from the URL above and store it in the Main.config object
+        StringRequest mRequest = new StringRequest(Request.Method.GET, Main.ConfigUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                ///handle response from service
+                Log.d(TAG, "Response: " + s);
+
+                try {
+                    JSONArray objects = new JSONArray(s);
+                    for (int i = 0; i < objects.length(); i++) {
+                        JSONObject session = objects.getJSONObject(i);
+                        Main.config.logo = session.getString("logolink");
+                        Main.config.appName = session.getString("appname");
+                        Main.config.subTitle = session.getString("subtitle");
+                        Main.config.colorScheme = session.getString("colourscheme");
+                        Log.d(TAG, Main.config.toString());
+                    }
+                } catch (Exception e) {
+                    Log.d(TAG, "Error loading Config: " + e.toString());
                 }
+
             }
+        }, new Response.ErrorListener() {
 
-            get = new HttpGet(Main.DataUrl);
-            rp = hc.execute(get);
-            // grab JSON from the URL above and store it in the items class
-            Log.d(TAG, "Status Code " + Integer.toString(rp.getStatusLine().getStatusCode()));
-            if(rp.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
-            {
-                result = EntityUtils.toString(rp.getEntity());
-                JSONArray objects = new JSONArray(result);
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d(TAG, "Response: " + volleyError.toString());
+            }
+        });
 
-                for (int i = 0; i < objects.length(); i++) {
-                    JSONObject session = objects.getJSONObject(i);
-                    Item item = new Item();
-                    item.itemName = session.getString("itemname");
-                    item.brand = session.getString("brand");
-                    item.size = session.getString("size");
-                    item.imageURL = session.getString("imagelink");
-                    item.sizeGuideURL = session.getString("sizeguide");
-                    item.videoPreviewURL = session.getString("videopreview");
-                    item.itemPrice = session.getString("price");
-                    item.inventoryCount = session.getString("inventorycount");
-                    item.stockForecast = session.getString("forecast");
+        mQueue.add(mRequest);
 
-                    Main.items.add(item);
-                    Log.d(TAG, item.toString());
+        // SECOND HTTP REQUEST: grab JSON from the URL above and store it in the items class
+        mRequest = new StringRequest(Request.Method.GET, Main.DataUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                ///handle response from service
+                Log.d(TAG, "Response: " + s);
+
+                try {
+                    JSONArray objects = new JSONArray(s);
+
+                    for (int i = 0; i < objects.length(); i++) {
+                        JSONObject session = objects.getJSONObject(i);
+                        Item item = new Item();
+                        item.itemName = session.getString("itemname");
+                        item.brand = session.getString("brand");
+                        item.size = session.getString("size");
+                        item.imageURL = session.getString("imagelink");
+                        item.sizeGuideURL = session.getString("sizeguide");
+                        item.videoPreviewURL = session.getString("videopreview");
+                        item.itemPrice = session.getString("price");
+                        item.inventoryCount = session.getString("inventorycount");
+                        item.itemLocation = session.getString("location");
+                        item.stockForecast = session.getString("forecast");
+
+                        Main.items.add(item);
+                        Log.d(TAG, item.toString());
+                    }
+                } catch (Exception e) {
+                    Log.d(TAG, "Error loading Config: " + e.toString());
                 }
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error loading Config or Data", e);
-            Log.e(TAG, result);
-        }
+                getContext().getContentResolver().notifyChange(Uri.parse("content://rafa"), null, false);
 
-        getContext().getContentResolver().notifyChange(Uri.parse("content://rafa"), null, false);
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.d(TAG, "Response: " + volleyError.toString());
+            }
+        });
+
+        mQueue.add(mRequest);
         return;
     }
 

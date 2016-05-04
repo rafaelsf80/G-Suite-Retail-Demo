@@ -12,5 +12,6 @@ public class Item {
     public String videoPreviewURL;
     public String itemPrice;
     public String inventoryCount;
+    public String itemLocation;
     public String stockForecast;
 }

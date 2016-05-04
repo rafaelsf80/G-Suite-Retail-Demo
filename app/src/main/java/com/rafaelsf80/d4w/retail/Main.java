@@ -229,6 +229,7 @@ public class Main extends Activity {
                 Uri.parse("android-app://com.rafaelsf80.d4w.retail/http/host/path")
         );
         AppIndex.AppIndexApi.start(client, viewAction);
+
     }
 
     @Override
@@ -249,5 +250,6 @@ public class Main extends Activity {
         );
         AppIndex.AppIndexApi.end(client, viewAction);
         client.disconnect();
+
     }
 }

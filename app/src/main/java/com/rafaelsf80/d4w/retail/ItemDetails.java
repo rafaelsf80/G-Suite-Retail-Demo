@@ -46,6 +46,7 @@ public class ItemDetails extends Activity {
 		TextView tvDetailsBy = (TextView) findViewById(R.id.tv_details_by);
 		TextView tvSizeView = (TextView) findViewById(R.id.tv_details_size);
 		TextView tvPriceView = (TextView) findViewById(R.id.tv_details_item_price);
+		TextView tvLocation = (TextView) findViewById(R.id.tv_details_location);
 		TextView tvStockView = (TextView) findViewById(R.id.tv_details_instock);
 
 		// gather data which was passed from the selected list item
@@ -59,6 +60,7 @@ public class ItemDetails extends Activity {
 		final String videoPreview = fromListItem.getStringExtra("videoPreview");
 		final String itemPrice = fromListItem.getStringExtra("itemPrice");
 		final String inventoryCount = fromListItem.getStringExtra("inventoryCount");
+		final String itemLocation = fromListItem.getStringExtra("itemLocation");
 		String stockForecast = fromListItem.getStringExtra("stockForecast");
 
 		// set UI information to the data which has been parsed through
@@ -69,6 +71,7 @@ public class ItemDetails extends Activity {
 		tvDetailsBy.setText( getResources().getString(R.string.details_by) + brand);
 		tvSizeView.setText(getResources().getString(R.string.details_size) + size);
 		tvPriceView.setText(getResources().getString(R.string.details_item_price) + itemPrice);
+		tvLocation.setText(getResources().getString(R.string.details_item_location) + itemLocation);
 		tvStockView.setText(getResources().getString(R.string.details_restock) + stockForecast);
 
 

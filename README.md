@@ -16,7 +16,7 @@ The spreadsheet contains up to three Apps Script projects, one for the predictio
 
 2) Open the spreadsheet backend to see the data.
 
-3) If you want to customize content, you need to create a copy a copy of the spreadsheet, publish the two scripts and finally change the two URLs accordingly in the code
+3) If you want to customize content, you need to create a copy of the spreadsheet, publish the two scripts and finally change the two URLs accordingly in the code
 (D4WSyncAdapter.java)
 
 4) Click Refresh on the apk to see the changes
@@ -26,24 +26,23 @@ The spreadsheet contains up to three Apps Script projects, one for the predictio
 The backend is a [Google Spreadsheet](https://docs.google.com/spreadsheets/d/1zQMzthur_TkahfG-8-vBWQgXJVxdT9UnhHJavRJAHhI/edit?usp=sharing), hosted on Drive for Work backend
 
 
-## Libraries
+## Dependencies
 
 The following libraries must be included for proper compilation and execution:
-* picasso-2.4.0
-* android-suppport-v4
-* android-support-v7-recyclerview
-* android-support-v7-cardview
 
-
-## Android release
-
-This apk uses Material Design concepts (also transitions) compiled with SDK target 21 (5.0) and tested on 
-Nexus 5 and Nexus 6 with lollipop IDE used is Android Studio
+```groovy  
+      compile 'com.android.support:cardview-v7:23.3.0'
+      compile 'com.android.support:recyclerview-v7:23.3.0'
+      compile 'com.squareup.picasso:picasso:2.5.0'
+      compile 'com.android.volley:volley:1.0.0'
+```
 
 
 ## Screenshots
 
 Main activity, details and view to send email:
+
+
 <img src="https://raw.githubusercontent.com/rafaelsf80/d4wRetail/master/screenshots/main.png" alt="alt text" width="100" height="200">
 <img src="https://raw.githubusercontent.com/rafaelsf80/d4wRetail/master/screenshots/details.png" alt="alt text" width="100" height="200">
 <img src="https://raw.githubusercontent.com/rafaelsf80/d4wRetail/master/screenshots/survey.png" alt="alt text" width="100" height="200">
