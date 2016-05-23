@@ -1,13 +1,13 @@
-# Retail Android app with a Google Spreadsheet as backend #
+# Retail Android app: inventory management with a Google Spreadsheet#
 Customizable Android apk to demonstrate retail use case with Google Drive.
 No complex backend, just a Google Spreadsheet stored on a Google Apps account.
-Drive for Work (Google Apps unlimited) offers unlimited storage for enterprises, as well as audit, archiving and eDiscovery to all company files.
-More info [here](https://apps.google.com/driveforwork/)
 
-The apk uses this [spreadsheet as backend](https://docs.google.com/spreadsheets/d/1zQMzthur_TkahfG-8-vBWQgXJVxdT9UnhHJavRJAHhI/edit?usp=sharing), mandatory to execute the apk. 
-The apk makes use of JSON download functionality of Google Spreadsheets as explained [in this video](https://www.youtube.com/watch?v=RSgMEtRl0sw), and also [prediction API](https://developers.google.com/apps-script/advanced/prediction). 
+The apk uses this [spreadsheet as backend](https://docs.google.com/spreadsheets/d/1zQMzthur_TkahfG-8-vBWQgXJVxdT9UnhHJavRJAHhI/edit?usp=sharing), and makes use of JSON download functionality of Google Spreadsheets as explained [in this video](https://www.youtube.com/watch?v=RSgMEtRl0sw), together with the [Prediction API](https://developers.google.com/apps-script/advanced/prediction). 
 
 The spreadsheet contains up to three Apps Script projects, one for the prediction API, another one to download data and another one to download config parameters, like logos, titles, subtitle and background color.
+
+Visit how to evolve the retail industry with [Google for Work](https://apps.google.com/driveforwork/) watching the [Atmosphere Digital online event](https://atmosphere.withgoogle.com/live/atmosphere-retail-2016-april-amer).
+Drive for Work (Google Apps unlimited) offers unlimited storage for enterprises, as well as audit, archiving and eDiscovery capabilities.
 
 
 ## Usage
