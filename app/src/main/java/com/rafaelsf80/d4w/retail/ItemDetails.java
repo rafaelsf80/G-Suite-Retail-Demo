@@ -5,13 +5,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.transition.Slide;
-import android.transition.Transition;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,14 +24,14 @@ public class ItemDetails extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		//enable window content transition
-		getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
-
-		//set the transition
-		Transition ts = new Slide();  
-		ts.setDuration(500);
-		getWindow().setEnterTransition(ts);
-		getWindow().setExitTransition(ts);
+//		//enable window content transition
+//		getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
+//
+//		//set the transition
+//		Transition ts = new Slide();
+//		ts.setDuration(500);
+//		getWindow().setEnterTransition(ts);
+//		getWindow().setExitTransition(ts);
 
 		setContentView(R.layout.itemdetails);
 
