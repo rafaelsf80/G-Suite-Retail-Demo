@@ -56,7 +56,6 @@ import java.util.List;
 public class VisionActivity extends AppCompatActivity {
 
     private static final String CLOUD_VISION_API_KEY = "YOUR_API_KEY";
-
     public static final String FILE_NAME = "temp.jpg";
 
     private static final String TAG = Main.class.getSimpleName();
