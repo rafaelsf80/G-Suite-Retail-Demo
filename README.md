@@ -1,6 +1,6 @@
-# Retail Android app: inventory management for SMB with a Google Spreadsheet#
-Customizable Android apk to demonstrate retail use case with Google Drive.
-No complex backend, just a Google Spreadsheet as backend to store the inventory.
+# Serverless inventory management app for SMB with a Google Spreadsheet#
+Customizable Android apk to demonstrate retail use case with Google Apps.
+Serverless app, just a Google Spreadsheet as backend to store the inventory.
 
 The apk uses this [spreadsheet as backend](https://docs.google.com/spreadsheets/d/1zQMzthur_TkahfG-8-vBWQgXJVxdT9UnhHJavRJAHhI/edit?usp=sharing), and makes use of JSON download functionality of Google Spreadsheets as explained [in this video](https://www.youtube.com/watch?v=RSgMEtRl0sw), together with the [Prediction API](https://developers.google.com/apps-script/advanced/prediction). 
 
@@ -21,9 +21,9 @@ Drive for Work (Google Apps unlimited) offers unlimited storage for enterprises,
 
 4) Click Refresh on the apk to see the changes
 
-## Backend
+## Serverless
 
-The backend is a [Google Spreadsheet](https://docs.google.com/spreadsheets/d/1zQMzthur_TkahfG-8-vBWQgXJVxdT9UnhHJavRJAHhI/edit?usp=sharing), hosted on Drive for Work backend
+No backend server, just a [Google Spreadsheet](https://docs.google.com/spreadsheets/d/1zQMzthur_TkahfG-8-vBWQgXJVxdT9UnhHJavRJAHhI/edit?usp=sharing), hosted on Drive for Work backend
 
 
 ## Vision API (beta)
