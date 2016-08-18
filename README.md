@@ -29,7 +29,7 @@ No backend server, just a [Google Spreadsheet](https://docs.google.com/spreadshe
 
 ## Vision API (beta)
 
-Last release adds a vision API to detect photos. To be integrated in the workflow shortly.
+Last release includes a vision API to detect retail content on photos. To be integrated in the workflow shortly.
 
 ## Dependencies
 
