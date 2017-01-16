@@ -1,14 +1,14 @@
 # Serverless inventory management app for SMB with a Google Spreadsheet#
-Customizable Android apk to demonstrate retail use case with Google Apps.
+Customizable Android apk to demonstrate retail use case with G Suite.
 Serverless app, just a Google Spreadsheet as backend to store the inventory.
 Vision API and Prediction API are also used.
 
 The apk uses this [spreadsheet as backend](https://docs.google.com/spreadsheets/d/1zQMzthur_TkahfG-8-vBWQgXJVxdT9UnhHJavRJAHhI/edit?usp=sharing), and makes use of JSON download functionality of Google Spreadsheets as explained [in this video](https://www.youtube.com/watch?v=RSgMEtRl0sw), together with the [Prediction API](https://developers.google.com/apps-script/advanced/prediction). 
 
-The spreadsheet contains **three Apps Script projects**, one for the prediction API, another one to download data and another one to download config parameters, like logos, titles, subtitle and background color.
+The spreadsheet contains **three Apps Script projects**, one for the prediction API, one to download data and another one to download config parameters, like logos, titles, subtitle and background color.
 
-Visit how to evolve the retail industry with [Google for Work](https://apps.google.com/driveforwork/) watching the [Atmosphere Digital online event](https://atmosphere.withgoogle.com/live/atmosphere-retail-2016-april-amer).
-Drive for Work (Google Apps unlimited) offers unlimited storage for enterprises, as well as audit, archiving and eDiscovery capabilities.
+Visit how to evolve the retail industry with [Google Cloud](https://www.google.com/cloud/) watching the [Atmosphere Digital online event](https://atmosphere.withgoogle.com/live/atmosphere-retail-2016-april-amer).
+G Suite business offers unlimited storage for enterprises, as well as audit, archiving and eDiscovery capabilities.
 
 
 ## Usage
@@ -24,8 +24,7 @@ Drive for Work (Google Apps unlimited) offers unlimited storage for enterprises,
 
 ## Serverless
 
-No backend server, just a [Google Spreadsheet](https://docs.google.com/spreadsheets/d/1zQMzthur_TkahfG-8-vBWQgXJVxdT9UnhHJavRJAHhI/edit?usp=sharing), hosted on Drive for Work backend
-
+No backend server, just a [Google Spreadsheet](https://docs.google.com/spreadsheets/d/1zQMzthur_TkahfG-8-vBWQgXJVxdT9UnhHJavRJAHhI/edit?usp=sharing), hosted on Google Cloud.
 
 ## Vision API (beta)
 
